@@ -1,6 +1,5 @@
-// Use relative path in development to leverage Vite's proxy, avoiding CORS issues.
-// In production, this would be set to the actual backend URL if they are hosted on different domains.
-export const API_BASE_URL = import.meta.env.DEV ? '' : 'https://spotty-con-ivaniks-3f8c7802.koyeb.app'
+// Use relative path to leverage Vite's proxy in development and Vercel's rewrites in production, avoiding CORS issues.
+export const API_BASE_URL = ''
 
 /**
  * Enhanced fetch wrapper that automatically attaches the JWT token
