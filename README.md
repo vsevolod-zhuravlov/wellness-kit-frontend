@@ -1,73 +1,138 @@
-# React + TypeScript + Vite
+# Wellness Kit Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is the frontend application for **Wellness Kit**, a solution designed to solve the problem of **tax calculation for orders**.
 
-Currently, two official plugins are available:
+## Live Demo
+You can test the live deployed application here:
+🔗 **[https://wellness-kit-frontend.vercel.app](https://wellness-kit-frontend.vercel.app)**
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### Test Credentials
+To log in and explore the application, use the following credentials:
+- **Username / Email:** `admin` (or any string that looks like an email address, e.g., `test@example.com`)
+- **Password:** `admin`
 
-## React Compiler
+## Repository
+🔗 **[https://github.com/vsevolod-zhuravlov/wellness-kit-frontend](https://github.com/vsevolod-zhuravlov/wellness-kit-frontend)**
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Purpose
+The primary purpose of this application is to simplify and automate tax calculations for various orders. It provides an intuitive interface for managing orders, configuring tax settings, and ensuring compliance.
 
-## Expanding the ESLint configuration
+## Getting Started Locally
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+These instructions will guide you through getting a copy of the project up and running on your local machine for development and testing.
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### Prerequisites
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+Ensure you have [Node.js](https://nodejs.org/) installed (LTS version is recommended).
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### Installation and Setup
+
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/vsevolod-zhuravlov/wellness-kit-frontend.git
+   ```
+
+2. **Navigate to the project directory:**
+   ```bash
+   cd wellness-kit-frontend
+   ```
+
+3. **Install the dependencies:**
+   ```bash
+   npm install
+   ```
+   *(Note: This project uses standard npm as its package manager).*
+
+4. **Environment Configuration (Optional):**
+   Create a `.env` file in the root directory to specify a custom backend URL if you are running the API locally:
+   ```env
+   VITE_BACKEND_URL=http://localhost:8080
+   ```
+   *If `.env` is omitted or `VITE_BACKEND_URL` is not set, the app will fall back to using default proxy configurations or the deployed remote backend.*
+
+### Running the Development Server
+
+To start the Vite development server:
+
+```bash
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Open your browser and navigate to `http://localhost:5173` to see the application in action.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### Building for Production
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+To create an optimized production build:
+
+```bash
+npm run build
 ```
+
+This command will type-check the code using TypeScript (`tsc -b`) and bundle the project via Vite into the `dist` directory. You can preview the production build locally using `npm run preview`.
+
+## App Structure & Pages
+
+The application is built around a simple, intuitive flow centered around order management and tax calculation.
+
+### 1. Login Page (`/login`)
+The entry point for the application. It provides a secure login interface.
+- Includes dummy credentials for demo purposes (`admin` / `admin`).
+- Automatically redirects authenticated users to the Dashboard.
+
+### 2. Dashboard (`/`)
+The central hub of the application after logging in.
+- **Top Metrics**: Displays high-level statistics like Total Revenue, Total Tax Collected, and Total Orders.
+- **Order Tracking**: Contains a paginated data table showing all loaded orders.
+- **Search & Filter**: Allows users to filter orders by ID, Date Range, and Amount locally.
+- **Navigation**: Provides access to "Create Order" and "Import CSV" via the sidebar.
+
+### 3. Create Order (`/create-order`)
+A dedicated view for calculating tax on a new, single order based on location subtotal.
+- **Interactive Map Location**: Users can drop a pin on the map or enter Latitude and Longitude coords manually. 
+- **Validation**: Enforces that the location is strictly within New York State bounds.
+- **Real-Time Tax Calculation**: Instantly computes New York State/Metro tax once a valid subtotal and location are provided.
+- **Save to Database**: Completes the order workflow by sending it to the backend and generating an `ORD-XXXX` ID.
+
+### 4. Import CSV (`/import-csv`)
+A batch processing utility for importing bulk historical orders.
+- **Drag & Drop**: Accepts `.csv` files natively.
+- **CSV Data Validation**: Requires a schema of `latitude, longitude, subtotal` with optional identifiers.
+- **Batch Geocoding**: Validates every row locally to ensure the coordinates fall within New York state before uploading to the backend.
+- **Error Handling**: Generates visually distinct rows for valid/invalid entries and gives users the ability to automatically strip out invalid rows before final submission.
+
+### 5. Order Detail (`/orders/:id`)
+A granular view of an established order.
+- **Order Headers**: Shows the Order ID, Timestamp, and processing Status.
+- **Location Mapping**: Renders a static map block displaying the order's exact delivery coordinate.
+- **Financial Breakdown**: Visually decomposes the Subtotal, precise Tax Rate, calculated Tax Amount, and Final Total.
+
+## User Flows
+
+Here are the primary journeys a user takes through the application:
+
+1. **The Single Order Flow:**
+   - User logs in and lands on the **Dashboard**.
+   - User clicks *"New Order"* in the sidebar to open the **Create Order** page.
+   - User drops a pin inside New York on the map and enters a subtotal (e.g. `$100`).
+   - User clicks *"Calculate Tax"*, reviews the Tax Summary, and clicks *"Confirm & Save"*.
+   - User is redirected to a Success screen, completing the flow.
+
+2. **The Batch Processing Flow:**
+   - User clicks *"Import CSV"* in the sidebar.
+   - User downloads the sample template, fills it out, and drags the file into the upload zone.
+   - The app parses the rows and verifies coordinates.
+   - If a coordinate is outside NY, the user clicks *"Remove Invalid"*.
+   - User clicks *"Upload"* to commit the valid orders in batch to the database.
+
+3. **The Auditing Flow:**
+   - User reviews the **Dashboard** table for a specific customer order.
+   - User uses the *"Search Order ID"* or Date Filters to locate the record quickly.
+   - User clicks the row, opening the **Order Detail** page to audit the precise geographical tax rate applied to that order.
+
+## Technologies
+- **React 19** Structure and UI components
+- **TypeScript** Static typing
+- **Vite** Fast frontend build tool
+- **Tailwind CSS v4** Styling and design system
+- **React Router** Client-side routing
+- **React Query** Data fetching and caching
