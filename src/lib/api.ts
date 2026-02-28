@@ -1,5 +1,5 @@
-// Use relative path to leverage Vite's proxy in development and Vercel's rewrites in production, avoiding CORS issues.
-export const API_BASE_URL = ''
+// Use an explicit prefix to prevent backend proxy rules from colliding with frontend React Router SPA routes.
+export const API_BASE_URL = '/api-proxy'
 
 /**
  * Enhanced fetch wrapper that automatically attaches the JWT token

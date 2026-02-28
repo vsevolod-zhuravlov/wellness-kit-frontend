@@ -13,17 +13,10 @@ export default defineConfig({
   },
   server: {
     proxy: {
-      '/api': {
+      '/api-proxy': {
         target: 'https://spotty-con-ivaniks-3f8c7802.koyeb.app',
         changeOrigin: true,
-      },
-      '/orders': {
-        target: 'https://spotty-con-ivaniks-3f8c7802.koyeb.app',
-        changeOrigin: true,
-      },
-      '/oauth2': {
-        target: 'https://spotty-con-ivaniks-3f8c7802.koyeb.app',
-        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api-proxy/, '')
       }
     }
   }
