@@ -1,0 +1,4 @@
+/* App.css - global layout reset (Tailwind takes over all utility classes) */
+* {
+  box-sizing: border-box;
+}
