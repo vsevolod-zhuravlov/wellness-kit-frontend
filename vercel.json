@@ -1,12 +1,24 @@
 {
   "rewrites": [
     {
+      "source": "/api",
+      "destination": "https://spotty-con-ivaniks-3f8c7802.koyeb.app/api"
+    },
+    {
       "source": "/api/(.*)",
       "destination": "https://spotty-con-ivaniks-3f8c7802.koyeb.app/api/$1"
     },
     {
+      "source": "/orders",
+      "destination": "https://spotty-con-ivaniks-3f8c7802.koyeb.app/orders"
+    },
+    {
       "source": "/orders/(.*)",
       "destination": "https://spotty-con-ivaniks-3f8c7802.koyeb.app/orders/$1"
+    },
+    {
+      "source": "/oauth2",
+      "destination": "https://spotty-con-ivaniks-3f8c7802.koyeb.app/oauth2"
     },
     {
       "source": "/oauth2/(.*)",
