@@ -6,6 +6,7 @@ import { useAuth } from '@/contexts/AuthContext'
 import { FormField } from '@/components/FormField'
 import { PrimaryButton, OutlineButton } from '@/components/Buttons'
 import { AlertCircle } from 'lucide-react'
+import { DEFAULT_BACKEND_URL } from '@/config'
 
 // Icon from screenshot (Wt Kit Logo)
 const Logo = () => (
@@ -76,8 +77,9 @@ export default function LoginPage() {
   const handleGoogleLogin = () => {
     // Redirect browser directly to the remote OAuth2 endpoint.
     // We cannot use the local Vite proxy for this because the OAuth flow requires
-    // the backend's real domain for Google's callback.
-    window.location.href = `https://spotty-con-ivaniks-3f8c7802.koyeb.app/api/auth/login/oauth2/google`
+    // The backend's real domain for Google's callback.
+    const backendUrl = import.meta.env.VITE_BACKEND_URL || DEFAULT_BACKEND_URL
+    window.location.href = `${backendUrl}/api/auth/login/oauth2/google`
   }
 
   return (

@@ -1,0 +1,1 @@
+export const DEFAULT_BACKEND_URL = "https://spotty-con-ivaniks-3f8c7802.koyeb.app";
